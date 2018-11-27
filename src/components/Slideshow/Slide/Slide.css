@@ -8,12 +8,20 @@
 .image {
     overflow: hidden;
     height: 100%;
+    margin: auto;
 }
 
 .Slide img {
     /* width: 100%; */
     height: 100%;
+    display: inherit;
+    margin: auto;
 }
+
+.Slide.active {
+    display: block;
+}
+
 
 .title {
    position: absolute;
