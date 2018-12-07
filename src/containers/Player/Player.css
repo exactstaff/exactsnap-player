@@ -4,62 +4,19 @@
     box-sizing: border-box;
     height: 100vh;
 	color: #fff;
-	background: linear-gradient(-45deg, rgb(69, 172, 0), rgb(2, 168, 180), #23A6D5, #50c878);
-	background-size: 400% 400%;
-	-webkit-animation: Gradient 15s ease infinite;
-	-moz-animation: Gradient 15s ease infinite;
-    animation: Gradient 15s ease infinite;
+    background-color: 30px;
     overflow: hidden;
     position: relative;
     font-family: 'Raleway', sans-serif;
 }
 
 .Player video {
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
+
+  /* transform: scale(2); */
+  border-radius: 50px;
 }
-
-.ocean {
-    width:100%;
-    position:absolute;
-    left:0;
-    background: #015871;
-    transform: scale(4);
-    bottom: -200px;
-  }
-
-  .wave {
-    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x;
-    position: absolute;
-    top: -198px;
-    width: 6400px;
-    height: 198px;
-    animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) infinite;
-    transform: translate3d(0, 0, 0);
-  }
-
-  .wave:nth-of-type(2) {
-    top: -175px;
-    animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
-    opacity: 1;
-  }
-
-  @keyframes wave {
-    0% {
-      margin-left: 0;
-    }
-    100% {
-      margin-left: -1600px;
-    }
-  }
-
-  @keyframes swell {
-    0%, 100% {
-      transform: translate3d(0,-25px,0);
-    }
-    50% {
-      transform: translate3d(0,5px,0);
-    }
-  }
 
 .Slideshow {
 

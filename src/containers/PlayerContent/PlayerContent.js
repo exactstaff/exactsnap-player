@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import classes from './PlayerContent.css';
-import SlideShow from '../SlideShow/SlideShow';
+import SlideShowContainer from '../SlideShowContainer/SlideShowContainer';
 import Sidebar from '../Sidebar/Sidebar';
+
 
 class playerContent extends Component{
 
@@ -9,7 +10,7 @@ class playerContent extends Component{
         return(
             <div className={classes.playerContent}>
                 <Sidebar />
-                <SlideShow/>
+                <SlideShowContainer/>
             </div>
         );
     }

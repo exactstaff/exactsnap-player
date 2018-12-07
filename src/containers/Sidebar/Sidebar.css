@@ -1,15 +1,17 @@
 .Sidebar {
     width: 26%;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     flex-flow: column;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     box-shadow: none;
+    background-color: rgba(255,255,255,0.9);
 }
 
 .logo {
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .logo img {
