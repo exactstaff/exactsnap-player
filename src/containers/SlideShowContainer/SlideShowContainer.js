@@ -16,8 +16,8 @@ class SlideShowContainer extends Component {
         if(!this.state.loaded){
             axios.get("/", { 'crossDomain': true })
             .then(response => {
-                this.updateSlides(response.data.rows);
-
+                // console.log(response);
+                this.updateSlides(response.data);
             })
             .catch(error => {
                 console.log(error);
@@ -27,10 +27,11 @@ class SlideShowContainer extends Component {
     }
 
     updateSlides = (fetchedPosts) => {
+
         const posts =  [];
         for(let post in fetchedPosts){
 
-            posts.push(fetchedPosts[post].doc);
+            posts.push(fetchedPosts[post]);
         }
 
         if(posts){

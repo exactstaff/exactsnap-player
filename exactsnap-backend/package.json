@@ -1,0 +1,23 @@
+{
+  "name": "exactsnap-backend",
+  "version": "1.0.0",
+  "description": "This is Exactsnap's electron player backend logic",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "electron"
+  ],
+  "author": "kervin5",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "get-image-colors": "^1.8.1",
+    "nedb-promise": "^2.0.1",
+    "nodemon": "^1.18.7"
+  }
+}
