@@ -10,7 +10,15 @@ class Weather extends Component {
     weather: {
       apparentTemperature: "loading",
       humidity: "loading",
-      windGust: "loading"
+      windGust: "loading",
+      icon: "loading"
+    },
+
+    location: {
+        latitude: "loading",
+        longitude: "loading",
+        city: "loading",
+        region: "loading"
     }
   }
 
@@ -21,14 +29,14 @@ class Weather extends Component {
       let humidity = response.data.currently.humidity;
       let apparentTemperature = response.data.currently.apparentTemperature;
       let windGust = response.data.currently.windGust;
+      let icon = response.data.currently.icon;
 
       let currentWeather = {
         apparentTemperature: apparentTemperature,
-        humidity: humidity * 100,
-        windGust: windGust
+        humidity: Math.round(humidity * 100),
+        windGust: windGust,
+        icon: icon
     };
-    
-
       this.setState(
         {weather: currentWeather}
         );
@@ -36,14 +44,36 @@ class Weather extends Component {
     .catch(function (error) {
       console.log(error);
     });
+
+    axios.get('http://api.ipstack.com/45.26.254.145?access_key=8773b56636e9c17e2e130a4329d4bf9c', {'crossDomain': true})
+    .then((location) => {
+        console.log(location);
+        let latitude = location.data.latitude;
+        let longitude = location.data.longitude;
+        let city = location.data.city;
+        let region = location.data.region_code;
+        
+        let myLocation = {
+            latitude: latitude,
+            longitude: longitude,
+            city: city,
+            region: region
+        };
+
+        this.setState(
+            {location: myLocation}
+        );
+    }
+    )
   }
-    
+
     render() {
         return(
         <div className={classes.Weather}>
             <div className={classes.container}>
                 <div className={classes.header}>
-                    <h3>Los Angeles, CA</h3>
+                    <h3>{this.state.location.city}, {this.state.location.region}</h3>
+                    <p>{this.state.weather.icon}</p>
                     <h1><WiDaySunny size={80} color='#FFF' /></h1>
                     <h2><Clock format={'HH:mm:ss'} ticking={true} timezone={'US/Pacific'} /> AM</h2>
                 </div>
