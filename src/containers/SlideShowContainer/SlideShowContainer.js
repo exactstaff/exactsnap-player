@@ -1,8 +1,11 @@
 import React,{Component} from 'react';
-import axios from '../../sources/axios-images';
+import axios from '../../sources/axios-posts';
+// import axios from 'axios';
 import classes from './SlideShowContainer.css';
 import Slide from './Slide/Slide';
 import Slideshow from 'react-slidez';
+// const electron = window.require('electron');
+const { rendererPreload } = window.require('electron-routes');
 
 class SlideShowContainer extends Component {
     state = {
@@ -13,15 +16,20 @@ class SlideShowContainer extends Component {
     }
 
     componentDidMount() {
+        rendererPreload();
+
         if(!this.state.loaded){
-            axios.get("/", { 'crossDomain': true })
+
+            axios.get("all", { 'crossDomain': true })
             .then(response => {
-                // console.log(response);
+                console.log(response);
                 this.updateSlides(response.data);
+                // console.log(response);
             })
             .catch(error => {
                 console.log(error);
             })
+
         }
 
     }
@@ -36,14 +44,14 @@ class SlideShowContainer extends Component {
 
         if(posts){
 
-            let slides = posts.map((post,index)=>{
+            let slides = posts.map( (post,index)=>{
 
                 return (
                     <Slide
                     key={post.post_id}
                     location={post.location}
                     description={post.imageDescription}
-                    image={post.imageUrl}
+                    image={post.imageName}
                     backgroundColors={post.fetchedColors}
                     position={index}
                     totalSlides={posts.length}

@@ -1,6 +1,9 @@
 import React,{Component} from 'react';
 import classes from './Slide.css';
 // import * as Vibrant from 'node-vibrant';
+const electron = window.require('electron');
+const fs = electron.remote.require('fs');
+
 
 
 class Slide extends Component {
@@ -18,6 +21,11 @@ class Slide extends Component {
         // // Promise
         // v.getPalette().then((palette) => console.log(palette))
 
+         //read image (note: use async in production)
+     let _img = fs.readFileSync('data/images/'+this.props.image).toString('base64');
+     //example for .png
+     let _out = "data:image/jpeg;base64, " + _img;
+     //render/display
 
         return(
             <div className={[classes.Slide, this.state.status].join(" ")} style={{backgroundColor: "rgba("+this.props.backgroundColors[0].join(',')+")"}}>
@@ -27,7 +35,7 @@ class Slide extends Component {
                     </h2>
                 </div>
                 <div className={classes.image}>
-                    <img src={this.props.image} alt={classes.description}/>
+                    <img src={_out} alt={classes.description}/>
                 </div>
                 <div className={classes.description}>
                     <p>
