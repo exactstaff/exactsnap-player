@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'http://192.168.66.145:3001/api/posts'
+    baseURL: 'exactsnap://'
 });
 
 export default instance;
