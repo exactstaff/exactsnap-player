@@ -5,6 +5,7 @@ import classes from './SlideShowContainer.css';
 import Slide from './Slide/Slide';
 import Slideshow from 'react-slidez';
 // const electron = window.require('electron');
+const {ipcRenderer} = window.require('electron');
 const { rendererPreload } = window.require('electron-routes');
 
 class SlideShowContainer extends Component {
@@ -17,21 +18,32 @@ class SlideShowContainer extends Component {
 
     componentDidMount() {
         rendererPreload();
+        this.loadSlides();
 
-        if(!this.state.loaded){
 
-            axios.get("all", { 'crossDomain': true })
-            .then(response => {
-                console.log(response);
-                this.updateSlides(response.data);
-                // console.log(response);
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        ipcRenderer.on('posts-changed', (event, arg) => {
+           this.loadSlides();
+           console.log(arg);
+        });
 
-        }
+        // if(!this.state.loaded){
 
+
+
+        // }
+
+    }
+
+    loadSlides = () => {
+        axios.get("all", { 'crossDomain': true })
+        .then(response => {
+            console.log(response);
+            this.updateSlides(response.data);
+            // console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
     }
 
     updateSlides = (fetchedPosts) => {
@@ -43,6 +55,8 @@ class SlideShowContainer extends Component {
         }
 
         if(posts){
+
+
 
             let slides = posts.map( (post,index)=>{
 

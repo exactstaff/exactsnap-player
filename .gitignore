@@ -11,6 +11,9 @@
 
 *.jpg
 
+*.nbd
+
+*/data
 # testing
 /coverage
 

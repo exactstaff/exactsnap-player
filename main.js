@@ -1,4 +1,5 @@
 const electron = require('electron');
+const ipcMain = electron.ipcMain;
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -6,13 +7,19 @@ const BrowserWindow = electron.BrowserWindow;
 
 const path = require('path');
 const url = require('url');
-const registerRoutes = require('./src/backend/electron-api');
+const registerRoutes = require('./backend/electron-api');
+
+const {refresh}  = require("./backend/models/post");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 registerRoutes();
+
+startPostsSync();
+
+
 
 function createWindow() {
     // Create the browser window.
@@ -62,6 +69,23 @@ app.on('activate', function () {
         createWindow()
     }
 });
+
+function startPostsSync() {
+
+    refresh()
+    .then(()=>{
+        setInterval(async ()=>{
+
+            let postsDidChange = await refresh();
+
+            if(postsDidChange.status) {
+                mainWindow.webContents.send('posts-changed', postsDidChange);
+            }
+
+            // mainWindow.webContents.send('posts-changed', postsDidChange);
+        },5000);
+    });
+}
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
