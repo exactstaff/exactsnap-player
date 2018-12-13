@@ -22,7 +22,8 @@ class Slide extends Component {
         // v.getPalette().then((palette) => console.log(palette))
 
          //read image (note: use async in production)
-     let _img = fs.readFileSync('data/images/'+this.props.image).toString('base64');
+      let _img = fs.readFileSync('data/images/'+this.props.image).toString('base64');
+    //let _img = "ukjsalkjsalhkjsahkjsa"
      //example for .png
      let _out = "data:image/jpeg;base64, " + _img;
      //render/display
