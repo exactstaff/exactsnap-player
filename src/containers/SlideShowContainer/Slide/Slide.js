@@ -14,6 +14,7 @@ class Slide extends Component {
 
 
     render() {
+        console.log("rendered");
         // // Using constructor
         // let v = new Vibrant(this.props.image)
         // v.getPalette((err, palette) => console.log(palette))

@@ -72,19 +72,28 @@ app.on('activate', function () {
 
 function startPostsSync() {
 
-    refresh()
-    .then(()=>{
-        setInterval(async ()=>{
 
-            let postsDidChange = await refresh();
+        refresh().then((result)=>{
+            mainWindow.webContents.send('posts-loaded', result);
 
-            if(postsDidChange.status) {
-                mainWindow.webContents.send('posts-changed', postsDidChange);
-            }
+            setInterval(async ()=>{
 
-            // mainWindow.webContents.send('posts-changed', postsDidChange);
-        },5000);
-    });
+                if(true) {
+                    let postsDidChange = await refresh();
+
+                    if(postsDidChange.status) {
+                        mainWindow.webContents.send('posts-changed', postsDidChange);
+                    }
+                }
+
+                // mainWindow.webContents.send('posts-changed', postsDidChange);
+            },5000);
+        });
+
+
+
+
+
 }
 
 // In this file you can include the rest of your app's specific main process

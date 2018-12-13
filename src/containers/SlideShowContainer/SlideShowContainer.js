@@ -18,20 +18,18 @@ class SlideShowContainer extends Component {
 
     componentDidMount() {
         rendererPreload();
-        this.loadSlides();
-
+        ipcRenderer.on('posts-loaded', (event, arg) => {
+            this.loadSlides();
+            console.log("post loaded");
+         });
 
         ipcRenderer.on('posts-changed', (event, arg) => {
            this.loadSlides();
-           console.log(arg);
+           console.log("posts changed");
+        //    console.log(arg);
         });
 
-        // if(!this.state.loaded){
-
-
-
-        // }
-
+        this.loadSlides();
     }
 
     loadSlides = () => {
@@ -39,7 +37,7 @@ class SlideShowContainer extends Component {
         .then(response => {
             console.log(response);
             this.updateSlides(response.data);
-            // console.log(response);
+            console.log(response);
         })
         .catch(error => {
             console.log(error);
@@ -54,10 +52,7 @@ class SlideShowContainer extends Component {
             posts.push(fetchedPosts[post]);
         }
 
-        if(posts){
-
-
-
+        if(posts.length > 0){
             let slides = posts.map( (post,index)=>{
 
                 return (
