@@ -15,11 +15,6 @@ function registerRoutes() {
         res.json(result);
     });
 
-    api.get('image/:name', async (req,res)=>{
-        let name = request.params.name;
-        let imageAsBase64 = "data:image/jpeg;base64, " + fs.readFileSync('data/images/'+name, 'base64');
-        res.json({image: imageAsBase64});
-    });
 }
 
 

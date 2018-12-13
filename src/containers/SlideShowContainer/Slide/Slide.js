@@ -5,7 +5,6 @@ const electron = window.require('electron');
 const fs = electron.remote.require('fs');
 
 
-
 class Slide extends Component {
     state = {
         isVisible: false,
@@ -15,6 +14,7 @@ class Slide extends Component {
 
 
     render() {
+        console.log("rendered");
         // // Using constructor
         // let v = new Vibrant(this.props.image)
         // v.getPalette((err, palette) => console.log(palette))
