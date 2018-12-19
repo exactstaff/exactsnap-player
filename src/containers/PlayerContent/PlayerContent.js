@@ -10,7 +10,7 @@ class playerContent extends Component{
         return(
             <div className={classes.playerContent}>
                 <Sidebar />
-                {/* <SlideShowContainer/> */}
+                <SlideShowContainer/>
             </div>
         );
     }
