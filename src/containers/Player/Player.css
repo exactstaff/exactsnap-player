@@ -4,10 +4,9 @@
     box-sizing: border-box;
     height: 100vh;
 	color: #fff;
-    background-color: 30px;
     overflow: hidden;
     position: relative;
-    font-family: 'Raleway', sans-serif;
+	font-family: 'Raleway', sans-serif;
 }
 
 .Player video {
