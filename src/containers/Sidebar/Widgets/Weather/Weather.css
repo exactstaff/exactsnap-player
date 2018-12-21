@@ -1,9 +1,132 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 .Weather {
-    /* background-color: yellow; */
-    /* height: 100px; */
-    border-radius: 10px;
     overflow: hidden;
+    margin: 0 auto;
     width: 100%;
-    /* max-width: 300px; */
-    /* transform: scale(1.1); */
+    display: flex;
+    transform: scale(1.1);
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9vw;  
 }
+
+h1 {
+    padding: 0px;
+}
+
+.Weather .container{
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
+
+  .Weather .header{
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
+
+  .Weather .column_one{
+    display: inline-block;
+    flex-direction: row;
+    width: 45%;
+    text-align: left;
+    padding-left: 5px;
+    font-size: 1.5em;
+    text-shadow: 3px 3px 3px rgb(0, 0, 0, 0.4)
+  }
+
+  .Weather .column_two{
+    display: inline-block;
+    flex-direction: row;
+    width: 45%;
+    text-align: right;
+    padding-right: 5px;
+    text-shadow: 3px 3px 3px rgb(0, 0, 0, 0.4)
+  }
+
+  .Weather .column_three{
+    font-size: 2em;
+    text-shadow: 3px 3px 3px rgb(0, 0, 0, 0.4);
+  }
+
+  .Weather .column_four{
+    font-size: 1em;
+    text-shadow: 3px 3px 3px rgb(0, 0, 0, 0.4)
+  }
+
+  .Weather .icon { 
+      margin: 0 auto;
+      transform: scale(2);
+      width: 9em;
+      padding: 0 10px;
+      }
+
+    .Weather .temp {
+        font-size: 2em;
+    }
+
+    .Weather .clearDay {
+        /* background-color: #3dcbff; */
+        /* background-image: url('https://images.freeimages.com/images/large-previews/d85/blue-sky-1396430.jpg'); */
+        background-image: linear-gradient(-45deg,#5edcff,#eaeaea);
+        background-size: cover;
+    }
+
+    .Weather .clearNight {
+        /* background-color: #2c4b89; */
+        background-image: url('https://images.freeimages.com/images/large-previews/7c4/afternoon-moon-1496370.jpg');
+        background-size: cover;
+    }
+
+    .Weather .rain {
+        /* background-color: #707070; */
+        background-image: url('https://images.freeimages.com/images/large-previews/d0d/dark-clouds-1311383.jpg');
+        background-size: cover;
+    }
+
+    .Weather .snow {
+        /* background-color: #e0f8ff; */
+        background-image: url('https://images.freeimages.com/images/large-previews/b87/snow-1395478.jpg');
+        background-size: cover;
+    }
+
+    .Weather .sleet {
+        /* background-color: #e2f5ff; */
+        background-image: url('https://images.freeimages.com/images/large-previews/995/icy-briars-2-1248805.jpg');
+        background-size: cover;
+    }
+
+    .Weather .wind {
+        /* background-color: #2c4b89; */
+        background-image: url('https://images.freeimages.com/images/large-previews/4d3/wind-farm-1214436.jpg');
+        background-size: cover;
+    }
+
+    .Weather .fog {
+        /* background-color: #eeeeee; */
+        background-image: url('https://images.freeimages.com/images/large-previews/fc3/a-tree-in-the-fog-1362488.jpg');
+        background-size: cover;
+    }
+
+    .Weather .cloudy {
+        /* background-color: #707070; */
+        /* background-image: url('https://images.freeimages.com/images/large-previews/2cd/dark-sunny-1180252.jpg'); */
+        background-image: linear-gradient(-45deg,#5edcff,#eaeaea);
+        background-size: cover;
+    }
+
+    .Weather .partlyCloudyDay {
+        /* background-color: #707070 */
+        /* background-image: url('https://images.freeimages.com/images/large-previews/c22/cloudy-day-20-1352248.jpg'); */
+        background-image: linear-gradient(-45deg,#5bbdff,#dbdbdb);
+        background-size: cover;
+        color: #eee;
+    } 
+
+    .Weather .partlyCloudyNight {
+        /* background-color: #2c4b89; */
+        background-image: url('https://images.freeimages.com/images/large-previews/a3a/nimbus-1365053.jpg');
+        background-size: cover;
+    }
