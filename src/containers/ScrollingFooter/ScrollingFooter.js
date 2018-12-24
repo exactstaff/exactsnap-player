@@ -1,21 +1,37 @@
 import React,{Component} from 'react';
 import classes from './ScrollingFooter.css';
+import axios from 'axios';
 
+
+
+//eac90b4bd4f6416780cf5183953f0a8c news api key
 class ScrollingFooter extends Component {
+    state = {
+        news: null
+    }
+
+    componentDidMount() {
+        axios.get("https://newsapi.org/v2/top-headlines?"
+        +'country=us&'
+        +'category=health&'
+        + 'apiKey=eac90b4bd4f6416780cf5183953f0a8c')
+        .then(res => {
+            let i = 0;
+            let news = res.data.articles.map((fetchedNew)=>{
+                i++;
+                return <div key={i} className={classes.tickerItem}>{fetchedNew.title}</div>
+            });
+
+            this.setState({news: news});
+        })
+    }
+
+
     render() {
         return(
         <div className={classes.ScrollingFooter}>
-        <div className={classes.ticker}>
-            <div className={classes.tickerItem}>Letterpress chambray brunch.</div>
-            <div className={classes.tickerItem}>Vice mlkshk crucifix beard chillwave meditation hoodie asymmetrical Helvetica.</div>
-            <div className={classes.tickerItem}>Ugh PBR&B kale chips Echo Park.</div>
-            <div className={classes.tickerItem}>Gluten-free mumblecore chambray mixtape food truck. </div>
-
-            <div className={classes.tickerItem}>Letterpress chambray brunch.</div>
-            <div className={classes.tickerItem}>Vice mlkshk crucifix beard chillwave meditation hoodie asymmetrical Helvetica.</div>
-            <div className={classes.tickerItem}>Ugh PBR&B kale chips Echo Park.</div>
-            <div className={classes.tickerItem}>Gluten-free mumblecore chambray mixtape food truck. </div>
-            <div className={classes.tickerItem}>Authentic bitters seitan pug single-origin coffee whatever.</div>
+            <div className={classes.ticker}>
+                {this.state.news}
             </div>
         </div>);
     }
