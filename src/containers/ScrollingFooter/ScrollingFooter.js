@@ -2,8 +2,6 @@ import React,{Component} from 'react';
 import classes from './ScrollingFooter.css';
 import axios from 'axios';
 
-
-
 //eac90b4bd4f6416780cf5183953f0a8c news api key
 class ScrollingFooter extends Component {
     state = {

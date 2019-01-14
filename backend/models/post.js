@@ -2,6 +2,7 @@ const axios = require('axios');
 const Datastore = require('nedb-promise');
 const getColors = require('get-image-colors');
 const db = Datastore({ filename: 'data/db/posts.ndb', autoload: true });
+const imagesFolder = Datastore({ filename: 'data/images/na.ndb', autoload: true });
 const Path = require('path');
 const fs = require('fs');
 
@@ -52,6 +53,13 @@ async function refresh() {
 async function downloadPosts(newPosts) {
     let posts = [];
     try {
+
+    // let dir = path.join(__dirname, '..', '..','data','images');
+
+    // if (!fs.existsSync(dir)){
+    //     fs.mkdirSync(dir);
+    // }
+
     for(index in newPosts)
     {
         let fetchedPost = newPosts[index];

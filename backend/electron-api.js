@@ -3,6 +3,7 @@ const { Router } = require ('electron-routes');
 const axios = require('axios');
 const api = new Router('exactsnap');
 const Post = require("./models/post");
+const Weather = require('./models/weather');
 
 function registerRoutes() {
     api.get('refresh', async (req, res) => {
@@ -15,8 +16,10 @@ function registerRoutes() {
         res.json(result);
     });
 
+    api.get('weather',async (req,res)=>{
+        let result =  await Weather.get();
+        res.json(result);
+    });
 }
-
-
 
 module.exports = registerRoutes;
