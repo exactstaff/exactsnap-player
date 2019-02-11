@@ -77,18 +77,14 @@ class Weather extends Component {
 
             <div className={[classes.container, backgroundChanger(this.state.weather.icon)].join(' ')} >
 
-                <div className={classes.column_four}>
-                    <h3>{this.state.weather.summary}</h3>
-                </div>
-
                 <img className={classes.icon} src={iconChanger(this.state.weather.icon)}  alt="icons" />
-
 
                 <div className={classes.column_one}>
                     <p className={classes.temp}>{this.state.weather.apparentTemperature} F</p>
                 </div>
 
                 <div className={classes.column_two}>
+                    <h3>{this.state.weather.summary}</h3>
                     <p>Humidity: {this.state.weather.humidity}%</p>
                     <p>Wind: {this.state.weather.windGust} mph</p>
                 </div>
