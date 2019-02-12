@@ -13,6 +13,8 @@ data/*.jpg
 
 */data
 
+/data
+
 *.nbd
 *.nbd
 
