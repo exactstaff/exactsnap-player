@@ -28,6 +28,7 @@ p {
     width: 90%;
     margin: 0 auto;
     border-radius: 10px;
+    overflow: hidden;
   }
 
   .Weather .header{
@@ -71,7 +72,8 @@ p {
       margin: 0em;
       position: relative;
       top: -1.7rem;
-      transform: scale(1.6);
+      transform: scale(1.5);
+      /* height: 100%; */
       width: 11em;
       margin: 0.05em;
       margin-bottom: 11em;
@@ -90,7 +92,7 @@ p {
     .Weather .clearNight {
         /* background-color: #2c4b89; */
         background-image: url('https://images.freeimages.com/images/large-previews/7c4/afternoon-moon-1496370.jpg');
- 
+
     }
 
     .Weather .rain {

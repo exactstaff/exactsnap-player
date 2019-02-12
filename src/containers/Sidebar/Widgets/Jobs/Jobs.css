@@ -34,7 +34,7 @@
 
 .JobContainer {
     position: absolute;
-    animation: scrolling 400s infinite;
+    animation: scrolling 800s infinite;
     animation-direction: alternate-reverse;
     animation-timing-function: linear;
 
@@ -68,7 +68,7 @@
 
 
 .Job .title {
-    font-size: 1.5em;
+    font-size: 2em;
 }
 
 .Job .location {
@@ -76,5 +76,5 @@
 }
 
 .Job .Description {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }

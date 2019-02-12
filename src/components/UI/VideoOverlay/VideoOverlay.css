@@ -1,0 +1,19 @@
+.VideoOverlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    opacity: 1;
+    transition: 2s;
+}
+
+.Hidden {
+    opacity: 0;
+}
+
+.VideoOverlay video {
+    width: 100vw;
+    height: 100vh;
+}

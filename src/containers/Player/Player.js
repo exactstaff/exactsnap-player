@@ -6,6 +6,7 @@ import ScrollingFooter from '../ScrollingFooter/ScrollingFooter';
 import videoBackground from '../../assets/bg.mp4';
 import sizeMe from 'react-sizeme';
 import Confetti from 'react-confetti';
+import VideoOverlay from '../../components/UI/VideoOverlay/VideoOverlay';
 
 
 const DimensionedExample = sizeMe({
@@ -19,11 +20,10 @@ const DimensionedExample = sizeMe({
         }),
       }
 
-    state = {};
-
     render() {
         return(
             <div className={classes.Player}>
+                <VideoOverlay />
                 <PlayerContent />
                 <ScrollingFooter/>
                 <Confetti {...this.props.size}  numberOfPieces={30} />
