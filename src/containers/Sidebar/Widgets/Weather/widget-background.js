@@ -32,8 +32,10 @@ function backgroundChanger (icon) {
         
         case 'partly-cloudy-night':
             return ( classes.partlyCloudyNight );
-        
+        case 'overcast':
+            return ( classes.rain );
         default:
+            return ( classes.clearDay );
     }
 }
 

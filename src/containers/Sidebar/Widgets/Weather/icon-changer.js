@@ -36,8 +36,10 @@ function iconChanger (icon) {
             return partlyCloudyDay;        
         case 'partly-cloudy-night':
             return partlyCloudyNight;
-            default:
-            return '';
+        case 'overcast':
+            return wind;
+        default:
+            return "Unavailable";
 
     }
 }
