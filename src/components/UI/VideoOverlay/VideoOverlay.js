@@ -15,7 +15,7 @@ class VideoOverlay extends Component {
         setTimeout(()=>{
             this.setState({hidden: false});
             video.play();
-        },180000)
+        },60000)
     };
 
     render() {
