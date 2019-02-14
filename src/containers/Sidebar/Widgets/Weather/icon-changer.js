@@ -10,32 +10,31 @@ import fog from './icons/CLEAR_CLOUDY.svg';
 import clearCloudy from './icons/CLEAR_CLOUDY.svg';
 import partlyCloudyDay from './icons/PARTLY_CLOUDY_DAY.svg';
 import partlyCloudyNight from './icons/PARTLY_CLOUDY_NIGHT.svg';
-import thunder from './icons/thunder.svg'; 
+import thunder from './icons/thunder.svg';
 import thermo from './icons/thermo.svg';
 
 
 function iconChanger (icon) {
-    
     switch(icon) {
 
-        case 'clear-day':   
+        case 'clear-day':
             return clearDay;
         case 'clear-night':
-           return clearNight;       
+           return clearNight;
         case 'rain':
-            return  rain;        
+            return  rain;
         case 'snow':
-            return snow;        
+            return snow;
         case 'clear-sleet':
-            return sleet;        
+            return sleet;
         case 'clear-wind':
-            return wind;        
+            return wind;
         case 'clear-fog':
-            return fog;        
+            return fog;
         case 'clear-cloudy':
-            return clearCloudy;        
+            return clearCloudy;
         case 'partly-cloudy-day':
-            return partlyCloudyDay;        
+            return partlyCloudyDay;
         case 'partly-cloudy-night':
             return partlyCloudyNight;
         case 'overcast':
@@ -44,7 +43,6 @@ function iconChanger (icon) {
             return thermo;
 
     }
-    
 }
 
 export default iconChanger;
