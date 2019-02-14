@@ -72,12 +72,14 @@ class Weather extends Component {
     }
 
     render() {
+        
+
         return(
         <div className={classes.Weather}>
 
             <div className={[classes.container, backgroundChanger(this.state.weather.icon)].join(' ')} >
 
-                <img className={classes.icon} src={iconChanger(this.state.weather.icon)}  alt="icons" />
+                <img className={classes.icon} src={iconChanger(this.state.weather.icon)} alt="icons" />
 
                 <div className={classes.column_one}>
                     <p className={classes.temp}>{this.state.weather.apparentTemperature} F</p>
