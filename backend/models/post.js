@@ -78,11 +78,11 @@ async function downloadPosts(newPosts) {
         customizedPost.localImageURL = localImageURL;
 
         // const imageStream = (await axios.get(customizedPost.imageUrl,{responseType: 'stream'})).data;
-        let fetchedColors = (await getColors(Path.resolve('data/images', imageName)));
+        // let fetchedColors = (await getColors(Path.resolve('data/images', imageName)));
 
-        fetchedColors = fetchedColors.map(color => color.alpha(0.8).rgba());
+        // fetchedColors = fetchedColors.map(color => color.alpha(0.8).rgba());
 
-        customizedPost.fetchedColors = fetchedColors;
+        customizedPost.fetchedColors = [[0,0,0,0.5]];
 
         posts.push(customizedPost);
         // db.post(customizedPost);

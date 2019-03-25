@@ -35,7 +35,7 @@
 .JobContainer {
     position: absolute;
     animation: scrolling 800s infinite;
-    animation-direction: alternate-reverse;
+    /* animation-direction: alternate-reverse; */
     animation-timing-function: linear;
 
 }
