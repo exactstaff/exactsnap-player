@@ -6,10 +6,9 @@ const imagesFolder = Datastore({ filename: 'data/images/na.ndb', autoload: true 
 const Path = require('path');
 const fs = require('fs');
 
-
 async function refresh() {
-    let result = null;
-    let status = false;
+    // let result = null;
+    let status = "";
     let downloadedPosts = [];
     let deletedPosts = [];
     try{
@@ -24,9 +23,9 @@ async function refresh() {
 
         // result =  await downloadPosts(fetchedPosts);
 
-        if(!localPostsId){
+        if(localPostsId.length < 1){
            result =  await downloadPosts(fetchedPosts);
-            status = true;
+            status = "updated";
         }else {
             let postsToDownload = fetchedPosts.filter((remote_post)=>{
                 return !localPostsId.includes(remote_post.post_id);
@@ -39,7 +38,12 @@ async function refresh() {
             downloadedPosts = await downloadPosts(postsToDownload);
             deletedPosts = await deletePosts(postsToRemove);
             // deletedPosts  = localPosts;
-            status = (deletedPosts.length >0 || downloadedPosts.length > 0 );
+            if(postsToRemove.length >0 || postsToDownload.length > 0 ){
+                status = "updated"
+            }else {
+                status = "nochange"
+            }
+            // status = (postsToRemove.length >0 || postsToDownload.length > 0 );
         }
         return {status: status, posts: [downloadedPosts, deletedPosts]};
     }
@@ -54,33 +58,18 @@ async function downloadPosts(newPosts) {
     let posts = [];
     try {
 
-    // let dir = path.join(__dirname, '..', '..','data','images');
-
-    // if (!fs.existsSync(dir)){
-    //     fs.mkdirSync(dir);
-    // }
-
     for(index in newPosts)
     {
         let fetchedPost = newPosts[index];
         let imageName = await downloadImage(fetchedPost.imageUrl);
         let localImageURL = "exactsnap://image/"+imageName;
-        // let imageName = "Testing.jpg";
 
         let customizedPost = {
             ...fetchedPost,
-
-            // fetchedColors: fetchedColors,
-            // imageBase64: buffer
         };
 
         customizedPost.imageName =  imageName;
         customizedPost.localImageURL = localImageURL;
-
-        // const imageStream = (await axios.get(customizedPost.imageUrl,{responseType: 'stream'})).data;
-        // let fetchedColors = (await getColors(Path.resolve('data/images', imageName)));
-
-        // fetchedColors = fetchedColors.map(color => color.alpha(0.8).rgba());
 
         customizedPost.fetchedColors = [[0,0,0,0.5]];
 
@@ -90,31 +79,30 @@ async function downloadPosts(newPosts) {
         let result = await db.insert(posts);
         // return fetchedPosts;
 
-        return posts
+        return posts.length
     }
     catch(err){
-        return err
+        return 0;
     }
 }
 
 async function deletePosts(postsToDelete){
-       try {
+    try {
+        if(postsToDelete){
+            postsToDelete.forEach( (post)=>{
 
-    if(postsToDelete){
-        postsToDelete.forEach( (post)=>{
+                fs.unlink(Path.resolve('data/images', post.imageName),async function(err){
+                    if(!err) {
+                        let dbDelete =  await db.remove({_id: post._id});
+                    }
+                });
 
-            fs.unlink(Path.resolve('data/images', post.imageName),async function(err){
-                if(!err) {
-                    let dbDelete =  await db.remove({_id: post._id});
-                }
             });
-
-         });
-    }
-    return postsToDelete;
+        }
+        return postsToDelete.length;
     }
     catch(ex) {
-        return ex;
+        return 0;
     }
 }
 

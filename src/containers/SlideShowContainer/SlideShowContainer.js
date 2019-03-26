@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React,{PureComponent} from 'react';
 import axios from '../../sources/axios-posts';
 // import axios from 'axios';
 import classes from './SlideShowContainer.css';
@@ -8,7 +8,7 @@ import Slideshow from 'react-slidez';
 const {ipcRenderer} = window.require('electron');
 const { rendererPreload } = window.require('electron-routes');
 
-class SlideShowContainer extends Component {
+class SlideShowContainer extends PureComponent {
     state = {
         posts: null,
         slides:null,
@@ -29,15 +29,20 @@ class SlideShowContainer extends Component {
         //    console.log(arg);
         });
 
-        this.loadSlides();
+        ipcRenderer.on('nothing-changed', (event, arg) => {
+            // this.loadSlides();
+            console.log(event, arg);
+         //    console.log(arg);
+         });
+
+        // this.loadSlides();
     }
 
     loadSlides = () => {
+        console.log("called loadSlides");
         axios.get("all", { 'crossDomain': true })
         .then(response => {
-            console.log(response);
             this.updateSlides(response.data);
-            console.log(response);
         })
         .catch(error => {
             console.log(error);

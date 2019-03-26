@@ -3,6 +3,7 @@ import classes from './Slide.css';
 // import * as Vibrant from 'node-vibrant';
 const electron = window.require('electron');
 const fs = electron.remote.require('fs');
+const Path = electron.remote.require('path');
 
 
 class Slide extends Component {
@@ -22,10 +23,14 @@ class Slide extends Component {
         // v.getPalette().then((palette) => console.log(palette))
 
          //read image (note: use async in production)
-      let _img = fs.readFileSync('data/images/'+this.props.image).toString('base64');
-    //let _img = "ukjsalkjsalhkjsahkjsa"
-     //example for .png
-     let _out = "data:image/jpeg;base64, " + _img;
+
+    // let _img = fs.readFileSync('data/images/'+this.props.image).toString('base64');
+    //  let _out = "data:image/jpeg;base64, " + _img;
+     let _out = Path.resolve('data/images', this.props.image);
+
+     console.log(_out);
+
+    //  _out = "https://www.exactstaff.com/_ui/images/logo_exactstaff.png";
      //render/display
 
         return(
@@ -36,7 +41,7 @@ class Slide extends Component {
                     </h2>
                 </div>
                 <div className={classes.image}>
-                    <img src={_out} alt={classes.description}/>
+                    <img src={"file://"+_out} alt={classes.description}/>
                 </div>
                 <div className={classes.description}>
                     <p>

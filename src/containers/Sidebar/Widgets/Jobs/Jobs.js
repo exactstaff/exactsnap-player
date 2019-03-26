@@ -27,7 +27,7 @@ class Jobs extends Component {
             jobs = fetchedPosts.map(post => {
                 return(
                     <div className={classes.Job} key={post.id}>
-                        <img src={smallLogo} />
+                        <img src={smallLogo} alt=""/>
                         <div className={classes.content}>
                             <div className={classes.title}>
                                 <h4>{post.title.rendered}</h4>
@@ -42,12 +42,7 @@ class Jobs extends Component {
                     </div>
                 );
             });
-
-
             this.setState({jobs: jobs});
-
-
-
         }).catch(err => {
             console.log("error");
         })

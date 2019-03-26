@@ -10,7 +10,7 @@ import fog from './icons/CLEAR_CLOUDY.svg';
 import clearCloudy from './icons/CLEAR_CLOUDY.svg';
 import partlyCloudyDay from './icons/PARTLY_CLOUDY_DAY.svg';
 import partlyCloudyNight from './icons/PARTLY_CLOUDY_NIGHT.svg';
-import thunder from './icons/thunder.svg';
+// import thunder from './icons/thunder.svg';
 import thermo from './icons/thermo.svg';
 
 

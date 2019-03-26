@@ -17,11 +17,12 @@ let mainWindow;
 
 registerRoutes();
 
-startPostsSync();
+
 
 
 
 function createWindow() {
+
     // Create the browser window.
     mainWindow = new BrowserWindow({width: 800, height: 600,frame: false});
 
@@ -46,6 +47,8 @@ function createWindow() {
         // when you should delete the corresponding element.
         mainWindow = null
     })
+
+    startPostsSync(mainWindow);
 }
 
 // This method will be called when Electron has finished
@@ -70,30 +73,32 @@ app.on('activate', function () {
     }
 });
 
-function startPostsSync() {
+function startPostsSync(mainWindow) {
+    initialResult = refresh();
+
+    setTimeout(()=>{
+        mainWindow.webContents.send('posts-loaded', initialResult);
+    },3000)
 
 
-        refresh().then((result)=>{
-            mainWindow.webContents.send('posts-loaded', result);
+    // refresh().then((result)=>{
+    //     mainWindow.webContents.send('posts-loaded', result);
 
-            setInterval(async ()=>{
-
-                if(true) {
-                    let postsDidChange = await refresh();
-
-                    if(postsDidChange.status) {
-                        mainWindow.webContents.send('posts-changed', postsDidChange);
+        setInterval(()=>{
+                // let postsDidChange = refresh();
+                refresh().then(refreshStatus=>{
+                    if(refreshStatus.status === "updated") {
+                        mainWindow.webContents.send('posts-changed', "updated");
+                    }else {
+                        mainWindow.webContents.send('nothing-changed', "nochange");
                     }
-                }
+                })
 
-                // mainWindow.webContents.send('posts-changed', postsDidChange);
-            },5000);
-        });
-
-
-
-
-
+            // mainWindow.webContents.send('posts-changed', postsDidChange);
+        },13000);
+    // }).catch(err=>{
+    //     alert(err.message);
+    // });
 }
 
 // In this file you can include the rest of your app's specific main process
