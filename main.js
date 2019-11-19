@@ -4,22 +4,19 @@ const ipcMain = electron.ipcMain;
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
-
 const path = require('path');
 const url = require('url');
 const registerRoutes = require('./backend/electron-api');
 
-const {refresh}  = require("./backend/models/post");
+//Modules required to initialize content
+const jobs = require("./backend/controllers/jobs");
+const posts = require("./backend/controllers/posts");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 registerRoutes();
-
-
-
-
 
 function createWindow() {
 
@@ -38,7 +35,7 @@ function createWindow() {
     mainWindow.loadURL(startUrl);
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
@@ -48,7 +45,7 @@ function createWindow() {
         mainWindow = null
     })
 
-    startPostsSync(mainWindow);
+    jobs.initialize(mainWindow);
 }
 
 // This method will be called when Electron has finished
@@ -72,34 +69,6 @@ app.on('activate', function () {
         createWindow()
     }
 });
-
-function startPostsSync(mainWindow) {
-    initialResult = refresh();
-
-    setTimeout(()=>{
-        mainWindow.webContents.send('posts-loaded', initialResult);
-    },3000)
-
-
-    // refresh().then((result)=>{
-    //     mainWindow.webContents.send('posts-loaded', result);
-
-        setInterval(()=>{
-                // let postsDidChange = refresh();
-                refresh().then(refreshStatus=>{
-                    if(refreshStatus.status === "updated") {
-                        mainWindow.webContents.send('posts-changed', "updated");
-                    }else {
-                        mainWindow.webContents.send('nothing-changed', "nochange");
-                    }
-                })
-
-            // mainWindow.webContents.send('posts-changed', postsDidChange);
-        },13000);
-    // }).catch(err=>{
-    //     alert(err.message);
-    // });
-}
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

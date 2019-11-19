@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import classes from './Slide.css';
 // import * as Vibrant from 'node-vibrant';
 const electron = window.require('electron');
-const fs = electron.remote.require('fs');
+// const fs = electron.remote.require('fs');
 const Path = electron.remote.require('path');
 
 

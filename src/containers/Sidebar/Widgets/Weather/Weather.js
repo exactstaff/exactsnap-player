@@ -31,7 +31,6 @@ class Weather extends Component {
 
         axios.get('weather', { 'crossDomain': true})
         .then((response) => {
-            console.log(response);
             let humidity = response.data.humidity;
             let apparentTemperature = response.data.apparentTemperature;
             let windGust = response.data.windGust;
