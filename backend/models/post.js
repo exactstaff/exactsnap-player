@@ -6,48 +6,55 @@ const imagesFolder = Datastore({ filename: 'data/images/na.ndb', autoload: true 
 const Path = require('path');
 const fs = require('fs');
 
-async function refresh() {
-    let result = null;
-    let status = "";
-    try{
-        let fetchedPosts = (await axios.get("https://stories.exactstaff.com/api/posts/active")).data;
-        fetchedPosts = fetchedPosts.map((single_post) =>  single_post);
-
-        const localPosts = await db.find({}); // fetches all local posts
-
-        let fetchedPostsId = fetchedPosts.map(a => a.post_id);
-        let localPostsId = localPosts.map(a => a.post_id);
-
-        // result =  await downloadPosts(fetchedPosts);
-        let postsToDownload = fetchedPosts.filter((remote_post)=> !localPostsId.includes(remote_post.post_id));
-        let postsToRemove = localPosts.filter((local_post)=> !fetchedPostsId.includes(local_post.post_id));
-
-
-        /////////////////////////////////////////////////
-
-        if(postsToDownload.length > 0 || postsToDelete.length > 0){
-            //Fetches and saves all posts if the local database is empty
-            await Promise.all(savePosts(postsToDownload),deletePosts(postsToRemove));
-            status = "updated";
+function refresh() {
+    let running = false;
+    return async () => {
+        if(!running) {
+            let result = null;
+            let status = "";
+            let posts = [];
+            let debug = {};
+            running = true;
+            try{
+                let fetchedPosts = (await axios.get("https://stories.exactstaff.com/api/posts/active")).data;
+                fetchedPosts = fetchedPosts.map((single_post) =>  single_post);
+        
+                const localPosts = await db.find({}); // fetches all local posts
+        
+                let fetchedPostsId = fetchedPosts.map(a => a.post_id);
+                let localPostsId = localPosts.map(a => a.post_id);
+        
+                let postsToDownload = fetchedPosts.filter((remote_post)=> !localPostsId.includes(remote_post.post_id));
+                let postsToRemove = localPosts.filter((local_post)=> !fetchedPostsId.includes(local_post.post_id));
+              
+                if(postsToDownload.length > 0 || postsToRemove.length > 0){
+                    //Fetches and saves all posts if the local database is empty
+                    await Promise.all([savePosts(postsToDownload),deletePosts(postsToRemove)]);
+                    status = "updated";
+                } else {
+                    status = "nochange";
+                }
+        
+                posts = await db.find({}); // fetches all local posts
+                running = false;
+                return {status, posts, debug};
+            }
+        
+            catch(err){
+                running = false;
+                return {status: false, error: err.message,posts, debug};
+            }
         } else {
-            status = "nochange";
+            
+            return {status: "running",posts: []};
         }
-
-        const posts = await db.find({}); // fetches all local posts
-        return {status, posts};
-    }
-
-    catch(err){
-        return {status: false, error: err.message};
-    }
-
+    };
 }
+
 
 async function savePosts(newPosts) {
     try {
         let posts = await Promise.all(newPosts.map((fetchedPost)=>processPost(fetchedPost)));
- 
-        console.log(posts);
        await db.insert(posts);
        return posts;
     }
@@ -67,23 +74,23 @@ async function processPost(fetchedPost) {
 }
 
 async function deletePosts(postsToDelete){
-    try {
-        if(postsToDelete){
-            postsToDelete.forEach( (post)=>{
-
-                fs.unlink(Path.resolve('data/images', post.imageName),async function(err){
-                    if(!err) {
-                        let dbDelete =  await db.remove({_id: post._id});
-                    }
-                });
-
-            });
+    // try {
+        if(postsToDelete.length > 0){
+            await Promise.all(postsToDelete.map(singlePost=>deleteSinglePost(singlePost)));
         }
-        return postsToDelete.length;
-    }
-    catch(ex) {
-        return 0;
-    }
+        return postsToDelete;
+    // }
+  
+}
+
+async function deleteSinglePost(postToDelete) {
+    fs.unlink(Path.resolve(postToDelete.localImagePath),async function(err){
+        if(!err) {
+            let dbDelete =  await db.remove({_id: postToDelete._id});
+        }else {
+            throw err;
+        }
+    });
 }
 
 async function all(){

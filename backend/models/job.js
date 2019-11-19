@@ -8,7 +8,7 @@ async function all() {
             data: {
               query: `
               query { 
-                jobs {
+                jobs(last: 200) {
                     id
                     title
                     location {

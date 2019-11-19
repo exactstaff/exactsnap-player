@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import classes from './Jobs.css';
 import smallLogo from '../../../../assets/small-logo.jpg';
+import sanitize from '../../../../lib/html';
 
 const {ipcRenderer} = window.require('electron');
 
@@ -28,7 +29,7 @@ class Jobs extends Component {
                             <h4>{post.title}</h4>
                             <em className={classes.location}>{post.location.name}</em>
                         </div>
-                        <div className={classes.Description} dangerouslySetInnerHTML={{__html: (post.description.substring(0,200))}}>
+                        <div className={classes.Description} dangerouslySetInnerHTML={{__html: sanitize(post.description, []).__html.substr(0, 200) +"..."}}>
 
                         </div>
 
