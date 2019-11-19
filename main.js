@@ -21,7 +21,9 @@ registerRoutes();
 function createWindow() {
 
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 800, height: 600,frame: false});
+    mainWindow = new BrowserWindow({width: 800, height: 600,frame: false,  "webPreferences":{
+        "webSecurity":false
+      }});
 
     mainWindow.setFullScreen(true);
 
@@ -46,6 +48,7 @@ function createWindow() {
     })
 
     jobs.initialize(mainWindow);
+    posts.initialize(mainWindow);
 }
 
 // This method will be called when Electron has finished

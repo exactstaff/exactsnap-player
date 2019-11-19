@@ -15,7 +15,7 @@ class Slide extends Component {
 
 
     render() {
-        console.log("rendered");
+        // console.log("rendered");
         // // Using constructor
         // let v = new Vibrant(this.props.image)
         // v.getPalette((err, palette) => console.log(palette))
@@ -26,9 +26,9 @@ class Slide extends Component {
 
     // let _img = fs.readFileSync('data/images/'+this.props.image).toString('base64');
     //  let _out = "data:image/jpeg;base64, " + _img;
-     let _out = Path.resolve('data/images', this.props.image);
+    //  let _out = Path.resolve('data/images', this.props.image);
 
-     console.log(_out);
+    //  console.log(_out);
 
     //  _out = "https://www.exactstaff.com/_ui/images/logo_exactstaff.png";
      //render/display
@@ -41,7 +41,7 @@ class Slide extends Component {
                     </h2>
                 </div>
                 <div className={classes.image}>
-                    <img src={"file://"+_out} alt={classes.description}/>
+                    <img src={"file://"+this.props.image} alt={classes.description}/>
                 </div>
                 <div className={classes.description}>
                     <p>

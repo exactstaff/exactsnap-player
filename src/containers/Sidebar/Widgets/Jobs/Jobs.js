@@ -12,11 +12,9 @@ class Jobs extends Component {
 
 
     componentDidMount(){
-
         ipcRenderer.on('jobs-loaded', (event, arg) => {
             this.setState({jobs: arg.data.jobs});
         });
-
         ipcRenderer.send('jobs-mounted');
     }
 

@@ -7,45 +7,34 @@ const Path = require('path');
 const fs = require('fs');
 
 async function refresh() {
-    // let result = null;
+    let result = null;
     let status = "";
-    let downloadedPosts = [];
-    let deletedPosts = [];
     try{
         let fetchedPosts = (await axios.get("https://stories.exactstaff.com/api/posts/active")).data;
-
         fetchedPosts = fetchedPosts.map((single_post) =>  single_post);
 
-        const localPosts = await db.find({});
+        const localPosts = await db.find({}); // fetches all local posts
 
         let fetchedPostsId = fetchedPosts.map(a => a.post_id);
         let localPostsId = localPosts.map(a => a.post_id);
 
         // result =  await downloadPosts(fetchedPosts);
+        let postsToDownload = fetchedPosts.filter((remote_post)=> !localPostsId.includes(remote_post.post_id));
+        let postsToRemove = localPosts.filter((local_post)=> !fetchedPostsId.includes(local_post.post_id));
 
-        if(localPostsId.length < 1){
-           result =  await downloadPosts(fetchedPosts);
+
+        /////////////////////////////////////////////////
+
+        if(postsToDownload.length > 0 || postsToDelete.length > 0){
+            //Fetches and saves all posts if the local database is empty
+            await Promise.all(savePosts(postsToDownload),deletePosts(postsToRemove));
             status = "updated";
-        }else {
-            let postsToDownload = fetchedPosts.filter((remote_post)=>{
-                return !localPostsId.includes(remote_post.post_id);
-            });
-
-            let postsToRemove = localPosts.filter((local_post)=>{
-                return !fetchedPostsId.includes(local_post.post_id);
-            });
-
-            downloadedPosts = await downloadPosts(postsToDownload);
-            deletedPosts = await deletePosts(postsToRemove);
-            // deletedPosts  = localPosts;
-            if(postsToRemove.length >0 || postsToDownload.length > 0 ){
-                status = "updated"
-            }else {
-                status = "nochange"
-            }
-            // status = (postsToRemove.length >0 || postsToDownload.length > 0 );
+        } else {
+            status = "nochange";
         }
-        return {status: status, posts: [downloadedPosts, deletedPosts]};
+
+        const posts = await db.find({}); // fetches all local posts
+        return {status, posts};
     }
 
     catch(err){
@@ -54,36 +43,27 @@ async function refresh() {
 
 }
 
-async function downloadPosts(newPosts) {
-    let posts = [];
+async function savePosts(newPosts) {
     try {
-
-    for(index in newPosts)
-    {
-        let fetchedPost = newPosts[index];
-        let imageName = await downloadImage(fetchedPost.imageUrl);
-        let localImageURL = "exactsnap://image/"+imageName;
-
-        let customizedPost = {
-            ...fetchedPost,
-        };
-
-        customizedPost.imageName =  imageName;
-        customizedPost.localImageURL = localImageURL;
-
-        customizedPost.fetchedColors = [[0,0,0,0.5]];
-
-        posts.push(customizedPost);
-        // db.post(customizedPost);
-    }
-        let result = await db.insert(posts);
-        // return fetchedPosts;
-
-        return posts.length
+        let posts = await Promise.all(newPosts.map((fetchedPost)=>processPost(fetchedPost)));
+ 
+        console.log(posts);
+       await db.insert(posts);
+       return posts;
     }
     catch(err){
-        return 0;
+        return [];
     }
+}
+
+async function processPost(fetchedPost) {
+    let localImagePath = await downloadImage(fetchedPost.imageUrl);
+    let customizedPost = {
+        ...fetchedPost,
+        localImagePath,
+        fetchedColors: [[0,0,0,0.5]]
+    };
+    return customizedPost;
 }
 
 async function deletePosts(postsToDelete){
@@ -136,7 +116,7 @@ async function downloadImage (url) {
     // return a promise and resolve when download finishes
     return new Promise((resolve, reject) => {
       response.data.on('end', () => {
-        resolve(imageName)
+        resolve(path)
       })
 
       response.data.on('error', () => {

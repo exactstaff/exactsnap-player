@@ -136,6 +136,8 @@
     ]
   },
   "devDependencies": {
-    "foreman": "^3.0.1"
+    "foreman": "^3.0.1",
+    "husky": "^3.1.0",
+    "pretty-quick": "^2.0.1"
   }
 }
