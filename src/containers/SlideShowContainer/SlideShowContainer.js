@@ -13,7 +13,6 @@ class SlideShowContainer extends PureComponent {
 
     componentDidMount() {
         ipcRenderer.on('posts-loaded', (event, arg) => {
-            console.log(arg);
             this.setState({posts: arg.data.posts, loaded: true});
         });
 

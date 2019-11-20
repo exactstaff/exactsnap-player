@@ -6,17 +6,23 @@ const imagesFolder = Datastore({ filename: 'data/images/na.ndb', autoload: true 
 const Path = require('path');
 const fs = require('fs');
 
-function refresh() {
-    let running = false;
-    return async () => {
-        if(!running) {
-            let result = null;
+async function init() {
+    try {
+        const localPosts = await db.find({}); // fetches all local posts
+        return {status: "initialized", posts: localPosts};
+    }catch(err) {
+        return {status: "error", posts: []};
+    }
+}
+
+async function refresh() {
             let status = "";
             let posts = [];
             let debug = {};
-            running = true;
+          
             try{
                 let fetchedPosts = (await axios.get("https://stories.exactstaff.com/api/posts/active")).data;
+               
                 fetchedPosts = fetchedPosts.map((single_post) =>  single_post);
         
                 const localPosts = await db.find({}); // fetches all local posts
@@ -34,21 +40,13 @@ function refresh() {
                 } else {
                     status = "nochange";
                 }
-        
                 posts = await db.find({}); // fetches all local posts
-                running = false;
                 return {status, posts, debug};
             }
         
             catch(err){
-                running = false;
                 return {status: false, error: err.message,posts, debug};
             }
-        } else {
-            
-            return {status: "running",posts: []};
-        }
-    };
 }
 
 
@@ -133,5 +131,4 @@ async function downloadImage (url) {
 
 }
 
-module.exports.refresh = refresh;
-module.exports.all = all;
+module.exports = {refresh, all, init}
