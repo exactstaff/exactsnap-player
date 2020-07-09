@@ -1,0 +1,80 @@
+.Jobs {
+    width: 100%;
+    height: 100%;
+    background-color:white;
+    border-radius: 10px;
+    color: black;
+    overflow: hidden;
+    position: relative;
+
+
+}
+
+.sectionTitle {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    height: 10%;
+    background-color: #5BB053  ;
+    color: white;
+    font-size: 3rem;
+}
+
+.Jobs::after {
+    box-shadow: inset -1px 10px 17px 11px rgba(0,0,0,0.55);
+    content: '';
+ display: block;
+ height: 100%;
+ position: absolute;
+ top: 0;
+ width: 100%;
+}
+
+.JobContainer {
+    position: absolute;
+    animation: scrolling 800s infinite;
+    /* animation-direction: alternate-reverse; */
+    animation-timing-function: linear;
+
+}
+
+@keyframes scrolling {
+    from {
+        transform: translateY(0%);
+    }
+
+    to {
+        transform: translateY(-100%);
+    }
+}
+
+.Jobs *{
+    margin: 0;
+}
+
+.Job {
+    display: flex;
+    margin-bottom: 20px;
+    padding-right: 30px;
+}
+
+.Job img {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+}
+
+
+.Job .title {
+    font-size: 2em;
+}
+
+.Job .location {
+    color: green;
+}
+
+.Job .Description {
+    font-size: 1.5rem;
+}

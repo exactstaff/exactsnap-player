@@ -1,0 +1,12 @@
+.SlideShow {
+    width: 100%;
+    height: auto;
+    /* display: flex; */
+    /* flex-flow: column; */
+    position: relative;
+    overflow: hidden;
+    /* border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px; */
+    border-radius: 15px;
+}
+

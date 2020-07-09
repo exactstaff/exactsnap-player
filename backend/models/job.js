@@ -1,14 +1,13 @@
-const axios = require('axios');
+const axios = require("axios");
 
 async function all() {
-    try {
-       const jobs = await axios({
-            url: 'https://myexactjobs-graphql-api.herokuapp.com/',
-            method: 'post',
-            data: {
-              query: `
+  const result = await axios({
+    url: "https://jobboard-be-gql.now.sh/graphql",
+    method: "post",
+    data: {
+      query: `
               query { 
-                jobs(last: 200) {
+                jobs(take: 100) {
                     id
                     title
                     location {
@@ -17,15 +16,11 @@ async function all() {
                     description
                 }
             }
-                `
-            }
-          })
+                `,
+    },
+  });
 
-          return {jobs};
-    }
-    catch(err) {
-        return {jobs: []};
-    }
+  return result.data;
 }
 
-module.exports = {all};
+module.exports = { all };
