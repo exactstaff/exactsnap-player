@@ -3,8 +3,9 @@ import classes from "./SlideShowContainer.css";
 import Slide from "./Slide/Slide";
 import Slideshow from "react-slidez";
 import { PlayerContext } from "../../context/PlayerContext";
+import axios from "axios";
 
-const { ipcRenderer } = window.require("electron");
+// const { ipcRenderer } = window.require("electron");
 
 class SlideShowContainer extends PureComponent {
   state = {
@@ -13,25 +14,39 @@ class SlideShowContainer extends PureComponent {
   };
 
   componentDidMount() {
-    ipcRenderer.on("posts-loaded", (event, arg) => {
-      this.setState({ posts: arg.data.posts, loaded: true });
-    });
+    axios
+      .get("https://stories.exactstaff.com/api/posts/active")
+      .then(({ data }) => {
+        this.setState({ posts: data, loaded: true });
+      });
+    // ipcRenderer.on("posts-loaded", (event, arg) => {
+    //   this.setState({ posts: arg.data.posts, loaded: true });
+    // });
 
-    ipcRenderer.on("debugger", (event, arg) => {
-      console.log(arg);
-    });
-    ipcRenderer.send("slideshow-mounted");
+    // ipcRenderer.on("debugger", (event, arg) => {
+    //   console.log(arg);
+    // });
+    // ipcRenderer.send("slideshow-mounted");
   }
 
   generateSlides = (posts) => {
     return posts.map((post, index) => {
       return (
+        // <Slide
+        //   key={post.post_id}
+        //   location={post.location}
+        //   description={post.imageDescription}
+        //   image={post.image}
+        //   backgroundColors={[0, 0, 0, 0.5]}
+        //   position={index}
+        //   totalSlides={posts.length}
+        // />
         <Slide
           key={post.post_id}
           location={post.location}
           description={post.imageDescription}
-          image={post.image}
-          backgroundColors={post.fetchedColors}
+          image={post.imageUrl}
+          backgroundColors={[[0, 0, 0, 0.5]]}
           position={index}
           totalSlides={posts.length}
         />

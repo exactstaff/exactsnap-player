@@ -53,7 +53,7 @@ function createWindow() {
   });
 
   jobs.initialize(mainWindow);
-  posts.initialize(mainWindow);
+  // posts.initialize(mainWindow);
 }
 
 // This method will be called when Electron has finished

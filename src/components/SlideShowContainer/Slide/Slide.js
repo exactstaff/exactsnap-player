@@ -44,7 +44,8 @@ class Slide extends Component {
         </div>
         <div className={classes.image}>
           <img
-            src={"data:image/png;base64, " + this.props.image}
+            // src={"data:image/png;base64, " + this.props.image}
+            src={this.props.image}
             alt={classes.description}
           />
         </div>
