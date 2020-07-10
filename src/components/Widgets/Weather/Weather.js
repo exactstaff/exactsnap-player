@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import classes from "./Weather.css";
-import axios from "../../../sources/axios-posts";
+
 // import Clock from 'react-live-clock';
 import backgroundChanger from "./widget-background";
 // import Skycons from 'react-skycons';
 import iconChanger from "./icon-changer";
+import weatherFetch from "../../../lib/weather";
 
 class Weather extends Component {
   state = {
@@ -24,14 +25,13 @@ class Weather extends Component {
   };
 
   getWeather() {
-    axios
-      .get("weather", { crossDomain: true })
+    weatherFetch()
       .then((response) => {
-        let humidity = response.data.humidity;
-        let apparentTemperature = response.data.apparentTemperature;
-        let windGust = response.data.windGust;
-        let summary = response.data.summary;
-        let icon = response.data.icon;
+        let humidity = response.humidity;
+        let apparentTemperature = response.apparentTemperature;
+        let windGust = response.windGust;
+        let summary = response.summary;
+        let icon = response.icon;
 
         let currentWeather = {
           apparentTemperature: Math.round(apparentTemperature * 10) / 10,
@@ -42,10 +42,10 @@ class Weather extends Component {
         };
 
         let myLocation = {
-          latitude: response.data.latitude,
-          longitude: response.data.longitude,
-          city: response.data.city,
-          region: response.data.region,
+          latitude: response.latitude,
+          longitude: response.longitude,
+          city: response.city,
+          region: response.region,
         };
 
         this.setState({ weather: currentWeather, location: myLocation });
