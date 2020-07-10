@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Bubble from "../UI/Bubble/Bubble";
+import Bubble from "../Bubble/Bubble";
 import classes from "./Sidebar.css";
 import Weather from "../Widgets/Weather/Weather";
 import Jobs from "../Widgets/Jobs/Jobs";

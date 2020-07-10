@@ -6,7 +6,7 @@ import ScrollingFooter from "../ScrollingFooter/ScrollingFooter";
 import videoBackground from "../../assets/bg.mp4";
 import sizeMe from "react-sizeme";
 import Confetti from "react-confetti";
-import VideoOverlay from "../UI/VideoOverlay/VideoOverlay";
+import VideoOverlay from "../VideoOverlay/VideoOverlay";
 
 const DimensionedExample = sizeMe({
   monitorHeight: true,
