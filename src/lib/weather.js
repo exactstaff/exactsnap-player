@@ -24,7 +24,7 @@ export default async function get() {
       {
         crossDomain: true,
         headers: {
-          origin: "https://www.exactstaff.com",
+          "x-requested-with": "XMLHttpRequest",
         },
       }
     );
