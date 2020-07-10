@@ -24,7 +24,7 @@ export default async function get() {
       {
         crossDomain: true,
         headers: {
-          "x-requested-with": "XMLHttpRequest",
+          "X-Requested-With": "XMLHttpRequest",
         },
       }
     );
