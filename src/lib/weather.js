@@ -21,7 +21,12 @@ export default async function get() {
       "http://api.ipstack.com/" +
         ip +
         "?access_key=8773b56636e9c17e2e130a4329d4bf9c",
-      { crossDomain: true }
+      {
+        crossDomain: true,
+        headers: {
+          origin: "https://www.exactstaff.com",
+        },
+      }
     );
 
     currentLocation.latitude = location.data.latitude;
