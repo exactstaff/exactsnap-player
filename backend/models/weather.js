@@ -17,7 +17,7 @@ async function get() {
   };
 
   try {
-    let ip = (await axios.get("https://api.ipify.org?format=json")).data.ip;
+    let ip = await axios.get("https://api.ipify.org?format=json").data.ip;
 
     let location = await axios.get(
       "http://api.ipstack.com/" +
@@ -31,14 +31,23 @@ async function get() {
     currentLocation.city = location.data.city;
     currentLocation.region = location.data.region_code;
 
+    // let response = await axios.get(
+    //   "https://api.darksky.net/forecast/a8de0abe53bc4c62e5826978c6bf640f/" +
+    //     currentLocation.latitude +
+    //     "," +
+    //     currentLocation.longitude
+    // );
+
     let response = await axios.get(
-      "https://api.darksky.net/forecast/a8de0abe53bc4c62e5826978c6bf640f/" +
-        currentLocation.latitude +
-        "," +
+      `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=${
+        currentLocation.latitude
+      }&lon=${
         currentLocation.longitude
+      }&appid=bc2086fc0d833ceef9245eeb53fa23cc`,
+      { crossDomain: true }
     );
 
-    currentLocation.humidity = response.data.currently.humidity;
+    currentLocation.humidity = response.data.main.humidity;
     currentLocation.apparentTemperature =
       response.data.currently.apparentTemperature;
     currentLocation.windGust = response.data.currently.windGust;

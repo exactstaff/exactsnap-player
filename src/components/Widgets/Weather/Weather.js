@@ -5,6 +5,11 @@ import axios from "../../../sources/axios-posts";
 import backgroundChanger from "./widget-background";
 // import Skycons from 'react-skycons';
 import iconChanger from "./icon-changer";
+const publicIp = require("public-ip");
+
+let ip = (async () => {
+  return publicIp.v4();
+})();
 
 class Weather extends Component {
   state = {
@@ -24,19 +29,33 @@ class Weather extends Component {
   };
 
   getWeather() {
+    //get longitude, lattitude
     axios
-      .get("weather", { crossDomain: true })
+      .get(
+        `http://api.ipstack.com/45.26.254.145?access_key=8773b56636e9c17e2e130a4329d4bf9c`,
+        { crossDomain: true }
+      )
+      .then((coordinates) => {
+        console.log(coordinates.data);
+      });
+
+    //get weather
+    axios
+      .get(
+        `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=34.3046&lon=-118.6844&appid=bc2086fc0d833ceef9245eeb53fa23cc&units=Imperial`,
+        { crossDomain: true }
+      )
       .then((response) => {
-        let humidity = response.data.humidity;
-        let apparentTemperature = response.data.apparentTemperature;
-        let windGust = response.data.windGust;
-        let summary = response.data.summary;
-        let icon = response.data.icon;
+        let humidity = response.data.main.humidity;
+        let apparentTemperature = response.data.main.temp;
+        let windGust = response.data.wind.speed;
+        let summary = response.data.weather[0].main;
+        let icon = response.data.weather[0].icon;
 
         let currentWeather = {
           apparentTemperature: Math.round(apparentTemperature * 10) / 10,
-          humidity: Math.round(humidity * 100),
-          windGust: Math.round(windGust * 2.237 * 10) / 10,
+          humidity: Math.round(humidity * 1),
+          windGust: windGust,
           summary: summary,
           icon: icon,
         };
