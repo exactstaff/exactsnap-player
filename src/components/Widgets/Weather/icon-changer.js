@@ -19,9 +19,9 @@ function iconChanger(icon) {
       return clearDay;
     case "01n":
       return clearNight;
-    case "10d":
+    case "09d":
       return rain;
-    case "13d":
+    case "09n":
       return snow;
     case "13d":
       return sleet;
@@ -29,11 +29,11 @@ function iconChanger(icon) {
       return wind;
     case "03n":
       return fog;
-    case "03d":
-      return clearCloudy;
     case "02d":
+      return clearCloudy;
+    case "04d":
       return partlyCloudyDay;
-    case "02n":
+    case "04n":
       return partlyCloudyNight;
     case "50n":
       return wind;

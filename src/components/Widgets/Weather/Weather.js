@@ -5,11 +5,6 @@ import axios from "../../../sources/axios-posts";
 import backgroundChanger from "./widget-background";
 // import Skycons from 'react-skycons';
 import iconChanger from "./icon-changer";
-const publicIp = require("public-ip");
-
-let ip = (async () => {
-  return publicIp.v4();
-})();
 
 class Weather extends Component {
   state = {
@@ -29,48 +24,45 @@ class Weather extends Component {
   };
 
   getWeather() {
-    //get longitude, lattitude
-    axios
-      .get(
-        `http://api.ipstack.com/45.26.254.145?access_key=8773b56636e9c17e2e130a4329d4bf9c`,
-        { crossDomain: true }
-      )
-      .then((coordinates) => {
-        console.log(coordinates.data);
-      });
+    axios //GETS LOCATION DATA
+      .get(`https://geolocation-db.com/json/`, { crossDomain: true })
+      .then((res) => {
+        axios //GETS WEATHER DATA
+          .get(
+            `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=${
+              res.data.latitude
+            }&lon=${
+              res.data.longitude
+            }&appid=bc2086fc0d833ceef9245eeb53fa23cc&units=Imperial`,
+            { crossDomain: true }
+          )
+          .then((response) => {
+            let humidity = response.data.main.humidity;
+            let apparentTemperature = response.data.main.temp;
+            let windGust = response.data.wind.speed;
+            let summary = response.data.weather[0].main;
+            let icon = response.data.weather[0].icon;
 
-    //get weather
-    axios
-      .get(
-        `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=34.3046&lon=-118.6844&appid=bc2086fc0d833ceef9245eeb53fa23cc&units=Imperial`,
-        { crossDomain: true }
-      )
-      .then((response) => {
-        let humidity = response.data.main.humidity;
-        let apparentTemperature = response.data.main.temp;
-        let windGust = response.data.wind.speed;
-        let summary = response.data.weather[0].main;
-        let icon = response.data.weather[0].icon;
+            let currentWeather = {
+              apparentTemperature: Math.round(apparentTemperature * 10) / 10,
+              humidity: Math.round(humidity * 1),
+              windGust: windGust,
+              summary: summary,
+              icon: icon,
+            };
 
-        let currentWeather = {
-          apparentTemperature: Math.round(apparentTemperature * 10) / 10,
-          humidity: Math.round(humidity * 1),
-          windGust: windGust,
-          summary: summary,
-          icon: icon,
-        };
+            let myLocation = {
+              latitude: res.data.latitude,
+              longitude: res.data.longitude,
+              city: res.data.city,
+              region: res.data.state,
+            };
 
-        let myLocation = {
-          latitude: response.data.latitude,
-          longitude: response.data.longitude,
-          city: response.data.city,
-          region: response.data.region,
-        };
-
-        this.setState({ weather: currentWeather, location: myLocation });
-      })
-      .catch(function(error) {
-        console.log(error);
+            this.setState({ weather: currentWeather, location: myLocation });
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
       });
   }
 
@@ -115,6 +107,3 @@ class Weather extends Component {
 }
 
 export default Weather;
-
-// SET HUMIDITY TO MPH CURRENTLY IN KHM
-//<h3><Clock format={'h:mm a'} timezone={'US/Pacific'}/></h3>  //Commented out the import for the clock
