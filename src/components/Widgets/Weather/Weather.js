@@ -34,7 +34,11 @@ class Weather extends Component {
             }&lon=${
               res.data.longitude
             }&appid=bc2086fc0d833ceef9245eeb53fa23cc&units=Imperial`,
-            { crossDomain: true }
+            {
+              headers: {
+                origin: "https://localhost:3000", //the token is a variable which holds the token
+              },
+            }
           )
           .then((response) => {
             let humidity = response.data.main.humidity;

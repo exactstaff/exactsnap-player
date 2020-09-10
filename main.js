@@ -31,7 +31,7 @@ function createWindow() {
   mainWindow.setFullScreen(true);
 
   const startUrl =
-    process.env.ELECTRON_START_URL ||
+    (process.env.ELECTRON_START_URL && false) ||
     url.format({
       pathname: path.join(__dirname, "/build/index.html"),
       protocol: "file:",
@@ -42,7 +42,7 @@ function createWindow() {
   mainWindow.loadURL(startUrl);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on("closed", function() {

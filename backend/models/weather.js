@@ -39,7 +39,7 @@ async function get() {
     // );
 
     let response = await axios.get(
-      `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=${
+      `http://api.openweathermap.org/data/2.5/weather?lat=${
         currentLocation.latitude
       }&lon=${
         currentLocation.longitude
