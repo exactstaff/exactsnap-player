@@ -15,7 +15,7 @@ class Jobs extends Component {
       this.setState({ jobs: arg.data.jobs });
     });
     ipcRenderer.on("jobs-load-failed", (event, arg) => {
-      console.log(arg);
+      console.log(arg.message);
     });
     ipcRenderer.send("jobs-mounted");
   }
