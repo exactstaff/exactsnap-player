@@ -3,7 +3,6 @@ const { ipcMain } = require("electron");
 
 async function fetchJobs() {
   const jobs = await Job.all();
-  console.log(jobs);
   return jobs;
 }
 
