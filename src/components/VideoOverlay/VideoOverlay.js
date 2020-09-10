@@ -9,22 +9,18 @@ const VideoOverlay = () => {
   const video = useRef();
 
   const videoEndHandler = () => {
-    setPlayerState({ paused: false });
+    // setPlayerState({ paused: false });
 
-    setTimeout(() => {
-      setPlayerState({ paused: true });
-      video.current.play();
-    }, 6000);
+    // setTimeout(() => {
+    //   setPlayerState({ paused: true });
+    //   video.current.play();
+    // }, 6000);
+    video.current.currentTime = 0;
+    video.current.play();
   };
 
   return (
-    <div
-      className={
-        classes.VideoOverlay +
-        " " +
-        (!playerState.paused ? classes.Hidden : null)
-      }
-    >
+    <div className={classes.VideoOverlay}>
       <video
         id="backgroundVideo"
         onEnded={videoEndHandler}

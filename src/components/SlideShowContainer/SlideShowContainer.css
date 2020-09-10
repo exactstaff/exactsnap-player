@@ -1,12 +1,42 @@
 .SlideShow {
-    width: 100%;
-    height: auto;
-    /* display: flex; */
-    /* flex-flow: column; */
-    position: relative;
-    overflow: hidden;
-    /* border-top-right-radius: 15px;
+  width: 100%;
+  height: auto;
+  /* display: flex; */
+  /* flex-flow: column; */
+  position: relative;
+  overflow: hidden;
+  /* border-top-right-radius: 15px;
     border-bottom-right-radius: 15px; */
-    border-radius: 15px;
+  border-radius: 15px;
 }
 
+.StatusIndicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 2;
+  bottom: 10px;
+  right: 10px;
+  animation: glow 1s infinite alternate-reverse;
+}
+
+.Online {
+  background-color: green;
+}
+
+.Offline {
+  background-color: red;
+}
+
+@keyframes glow {
+  from {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+
+  to {
+    transform: scale3d(1.2, 1.2, 1);
+    opacity: 0.5;
+  }
+}
