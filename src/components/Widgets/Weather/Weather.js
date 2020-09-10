@@ -6,6 +6,7 @@ import backgroundChanger from "./widget-background";
 // import Skycons from 'react-skycons';
 import iconChanger from "./icon-changer";
 import weatherFetch from "../../../lib/weather";
+import axios from "axios";
 
 class Weather extends Component {
   state = {
