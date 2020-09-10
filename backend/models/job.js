@@ -2,7 +2,7 @@ const axios = require("axios");
 
 async function all() {
   const result = await axios({
-    url: "https://jobboard-be-gql.now.sh/graphql",
+    url: "https://jobboard-be-gql.herokuapp.com/graphql",
     method: "post",
     data: {
       query: `
