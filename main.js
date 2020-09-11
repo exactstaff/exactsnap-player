@@ -10,7 +10,7 @@ const url = require("url");
 
 //Modules required to initialize content
 const jobs = require("./backend/controllers/jobs");
-const posts = require("./backend/controllers/posts");
+// const posts = require("./backend/controllers/posts");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -23,7 +23,7 @@ function createWindow() {
     height: 600,
     frame: false,
     webPreferences: {
-      //   webSecurity: false,
+      webSecurity: false,
       nodeIntegration: true,
     },
   });
