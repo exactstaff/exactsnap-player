@@ -31,7 +31,7 @@ function createWindow() {
   mainWindow.setFullScreen(true);
 
   const startUrl =
-    (process.env.ELECTRON_START_URL && false) ||
+    process.env.ELECTRON_START_URL ||
     url.format({
       pathname: path.join(__dirname, "/build/index.html"),
       protocol: "file:",
