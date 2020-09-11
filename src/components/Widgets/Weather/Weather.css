@@ -25,7 +25,10 @@ p {
 
 .Weather .container {
   text-align: center;
+  <<<<<<<HEAD
   width: 90%;
+  =======width: 100%;
+  >>>>>>>master
   margin: 0 auto;
   border-radius: 10px;
   overflow: hidden;

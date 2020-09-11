@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import classes from "./Weather.css";
-import axios from "../../../sources/axios-posts";
+
 // import Clock from 'react-live-clock';
 import backgroundChanger from "./widget-background";
 // import Skycons from 'react-skycons';
 import iconChanger from "./icon-changer";
+import weatherFetch from "../../../lib/weather";
 
 class Weather extends Component {
   state = {
