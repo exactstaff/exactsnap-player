@@ -6,6 +6,7 @@ import backgroundChanger from "./widget-background";
 // import Skycons from 'react-skycons';
 import iconChanger from "./icon-changer";
 import weatherFetch from "../../../lib/weather";
+import axios from "axios";
 
 class Weather extends Component {
   state = {
@@ -26,44 +27,26 @@ class Weather extends Component {
 
   getWeather() {
     axios //GETS LOCATION DATA
-      .get(`https://geolocation-db.com/json/`, { crossDomain: true })
-      .then((res) => {
-        axios //GETS WEATHER DATA
-          .get(
-            `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=${
-              res.data.latitude
-            }&lon=${
-              res.data.longitude
-            }&appid=bc2086fc0d833ceef9245eeb53fa23cc&units=Imperial`,
-            { crossDomain: true }
-          )
-          .then((response) => {
-            let humidity = response.data.main.humidity;
-            let apparentTemperature = response.data.main.temp;
-            let windGust = response.data.wind.speed;
-            let summary = response.data.weather[0].main;
-            let icon = response.data.weather[0].icon;
+      .get(`https://stories.exactstaff.com/api/widgets/weather`)
+      .then((response) => {
+        let humidity = response.data.main.humidity;
+        let apparentTemperature = response.data.main.temp;
+        let windGust = response.data.wind.speed;
+        let summary = response.data.weather[0].main;
+        let icon = response.data.weather[0].icon;
 
-            let currentWeather = {
-              apparentTemperature: Math.round(apparentTemperature * 10) / 10,
-              humidity: Math.round(humidity * 1),
-              windGust: windGust,
-              summary: summary,
-              icon: icon,
-            };
+        let currentWeather = {
+          apparentTemperature: Math.round(apparentTemperature * 10) / 10,
+          humidity: Math.round(humidity * 1),
+          windGust: windGust,
+          summary: summary,
+          icon: icon,
+        };
 
-            let myLocation = {
-              latitude: res.data.latitude,
-              longitude: res.data.longitude,
-              city: res.data.city,
-              region: res.data.state,
-            };
-
-            this.setState({ weather: currentWeather, location: myLocation });
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
+        this.setState({ weather: currentWeather });
+      })
+      .catch(function(error) {
+        console.log(error);
       });
   }
 
