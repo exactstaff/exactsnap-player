@@ -13,12 +13,42 @@ class SlideShowContainer extends PureComponent {
     loaded: false,
   };
 
-  componentDidMount() {
-    axios
+  async componentDidMount() {
+    /* axios
       .get("https://stories.exactstaff.com/api/posts/active")
       .then(({ data }) => {
         this.setState({ posts: data, loaded: true });
-      });
+      }); */
+    let res = await axios.post(`https://exact-admin-api.herokuapp.com/graphql`, {
+      query: `
+          query {
+              posts(take:10)
+              {
+                  title,
+                  caption,
+                  location,
+                  imagePath,
+                  imageUrl
+              }
+          }`,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).catch(e => {
+      console.log(`Response Error: ${e}`);
+    });
+
+    const { status, data: { data: {
+      posts
+    } }, errors } = res;
+
+    switch (status) {
+      case 200:
+        this.setState({ posts: posts, loaded: true });
+        break;
+      default:
+        break;
+    }
     // ipcRenderer.on("posts-loaded", (event, arg) => {
     //   this.setState({ posts: arg.data.posts, loaded: true });
     // });
@@ -42,10 +72,10 @@ class SlideShowContainer extends PureComponent {
         //   totalSlides={posts.length}
         // />
         <Slide
-          key={post.post_id}
+          key={post.imagePath}
           location={post.location}
-          description={post.imageDescription}
-          image={post.imageUrl}
+          description={post.caption}
+          image={`data:image/png;base64,${post.imageUrl}`}
           backgroundColors={[[0, 0, 0, 0.5]]}
           position={index}
           totalSlides={posts.length}
